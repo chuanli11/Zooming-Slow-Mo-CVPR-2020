@@ -35,7 +35,7 @@ def main():
     if data_mode == 'SPMC':
         test_dataset_folder = '/data/xiang/SR/spmc/*'
     if data_mode == 'Custom':
-        test_dataset_folder = '../test_example/*' # TODO: put your own data path here
+        test_dataset_folder = '../test_example2/*' # TODO: put your own data path here
 
     #### evaluation
     flip_test = False #True#
@@ -85,6 +85,7 @@ def main():
 
     sub_folder_l = sorted(glob.glob(test_dataset_folder))
 
+
     model.load_state_dict(torch.load(model_path), strict=True)
 
     model.eval()
@@ -110,6 +111,7 @@ def main():
 
         #### read LR images
         imgs = util.read_seq_imgs(sub_folder)
+
         #### read GT images
         img_GT_l = []
         if data_mode == 'SPMC':
@@ -140,6 +142,7 @@ def main():
             gt_idx = select_idxs[1]
             imgs_in = imgs.index_select(0, torch.LongTensor(select_idx)).unsqueeze(0).to(device)
 
+            print(imgs_in.shape)
             output = single_forward(model, imgs_in)
 
             outputs = output.data.float().cpu().squeeze(0)            

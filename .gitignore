@@ -106,3 +106,6 @@ ENV/
 # other
 .vscode
 data/
+
+
+test_example2/*

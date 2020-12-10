@@ -259,8 +259,13 @@ def read_image(img_path):
 def read_seq_imgs(img_seq_path):
     '''read a sequence of images'''
     img_path_l = glob.glob(img_seq_path + '/*')
+
     # img_path_l.sort(key=lambda x: int(os.path.basename(x)[:-4]))
-    img_path_l.sort(key=lambda x: int(re.search(r'\d+', os.path.basename(x)).group()))
+    # img_path_l.sort(key=lambda x: int(re.search(r'\d+', os.path.basename(x)).group()))
+    
+    img_path_l.sort(key=lambda x: int(re.search(r'\d+', os.path.basename(x).split('.')[-2]).group()))
+    print(img_path_l)
+
     img_l = [read_image(v) for v in img_path_l]
     # stack to TCHW, RGB, [0,1], torch
     imgs = np.stack(img_l, axis=0)
